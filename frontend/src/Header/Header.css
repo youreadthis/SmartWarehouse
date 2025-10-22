@@ -1,0 +1,20 @@
+.left-part,
+.right-part {
+  display: flex;
+  align-items: center;
+}
+
+.left-part {
+  flex-direction: column;
+  justify-content: start;
+}
+
+.right-part {
+  gap: 25px;
+}
+
+.header-title {
+  margin: 0;
+  font-weight: 450;
+  font-size: 18px;
+}
