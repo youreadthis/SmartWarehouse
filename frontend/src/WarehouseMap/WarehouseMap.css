@@ -1,0 +1,38 @@
+.warehouse-map {
+  padding: 30px 0;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: "/Roboto_Mono/RobotoMono-VariableFont_wght.ttf"
+}
+
+.column-letters,
+.row-numbers {
+  margin-top: 25px;
+  font-family: "Roboto Mono", monospace;
+}
+
+.column-letters {
+  grid-column: 2;
+  margin-bottom: -25px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.row-numbers {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  width: fit-content;
+}
+
+.column-letter {
+  display: inline-block;
+  width: 22px;
+}
+
+.row-number {
+  display: inline-block;
+  height: 22px;
+}

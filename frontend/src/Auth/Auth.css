@@ -1,0 +1,15 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+  max-width: 250px;
+  padding: 10px;
+}
+
+.auth-title {
+  padding-inline: 10px;
+  margin-block: 10px;
+  font-weight: normal;
+  text-align: center;
+}
