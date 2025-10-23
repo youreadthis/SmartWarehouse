@@ -1,6 +1,9 @@
-import { AppBar, Button, Container, ThemeProvider, createTheme } from "@mui/material";
+import { AppBar, Button, Container, ThemeProvider, createTheme, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { grey } from "@mui/material/colors"
+import { visuallyHidden } from "@mui/utils"
+import { styled } from '@mui/material/styles';
 import "./Header.css"
 
 const appBarTheme = createTheme({
@@ -10,6 +13,10 @@ const appBarTheme = createTheme({
     }
   }
 })
+
+const Wrapper = styled("div")(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: visuallyHidden
+}))
 
 function Header() {
   return (
@@ -24,7 +31,12 @@ function Header() {
             <div className="user-info">
               <span>Иван</span> (<span>Оператор</span>)
             </div>
-            <Button startIcon={<LogoutIcon />} variant="contained">Выход</Button>
+            <RouterLink to="/login">
+
+              <Button startIcon={<LogoutIcon />} variant="contained">
+                <Wrapper>
+                  <Typography sx={{ sm: visuallyHidden }}>Выход</Typography></Wrapper></Button>
+            </RouterLink>
           </div>
         </Container>
       </AppBar>

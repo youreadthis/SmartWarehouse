@@ -2,13 +2,14 @@ import { Paper, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import ReplayIcon from '@mui/icons-material/Replay';
 import { visuallyHidden } from '@mui/utils';
+import "./AIPrediction.css"
 
 function AIPrediction() {
   const [endingGoods, setEndingGoods] = useState([]);
   const [reliability, setReliability] = useState(100);
 
   return (
-    <Paper sx={{marginLeft: "24px", padding: "10px", marginBottom: "20px"}}>
+    <Paper sx={{marginLeft: "24px", padding: "10px", marginBottom: "20px", position: "relative"}}>
       <h3>Прогноз от ИИ на следующие 7 дней</h3>
       <span className="additional-text">{endingGoods.length ? "Эти товары могут скоро закончиться" : "Товары, которые скоро могут закончиться, не найдены"}</span>
       <ol>
@@ -30,7 +31,7 @@ function AIPrediction() {
         </span> : ""
       }
 
-      <div className="ws-indicator ws-indicator-active">
+      <div className="ws-indicator ws-indicator-active" title="WebSocket-соединение активно">
         <Typography sx={visuallyHidden}>WebSocket-соединение активно</Typography>
       </div>
     </Paper>
