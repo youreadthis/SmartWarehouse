@@ -9,10 +9,17 @@ for prepare venv
   pip install -r 'requirements.txt'
 ```
 
-For start localhost
+For start localhost (backend)
 
 ```bash
   uvicorn SmartWarehouse.app.main:app --reload
+```
+
+For start localhost (frontend)
+
+```bash
+  cd ./SmartWarehouse/frontend
+  npm run dev
 ```
     
 ## Documentation
