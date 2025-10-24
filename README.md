@@ -4,7 +4,7 @@ Smart Werehouse for RTC
 
 ## Installation
 
-for prepear venv
+for prepare venv
 ```bash
   pip install -r 'requirements.txt'
 ```

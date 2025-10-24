@@ -1,0 +1,19 @@
+.csv-load-input {
+  display: none;
+}
+
+.drag-and-drop-area {
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 15px;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+  background-color: rgb(230, 229, 229);
+  text-align: center;
+  transition: all .5s;
+}
+
+.drag-and-drop-area-active {
+  background-color: #fff;
+  border-color: #2c2b2b;
+}
