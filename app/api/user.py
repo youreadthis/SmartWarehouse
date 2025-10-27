@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from SmartWarehouse.app.schemes.user import UserLoginShem
-from SmartWarehouse.configFile import Security
+from ..schemes.user import UserLoginShem
+from configFile import Security
 
 router = APIRouter()
 

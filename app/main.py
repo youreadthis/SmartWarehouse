@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from SmartWarehouse.app.api import main_router
-from SmartWarehouse.configFile import url
+from app.api import main_router
+from configFile import url
 
 app = FastAPI()
 app.add_middleware(

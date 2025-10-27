@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.pool import NullPool
 
-from SmartWarehouse.configFile.DataBaseconfig import USERBD, PASSWORDBD
+from configFile.DataBaseconfig import USERBD, PASSWORDBD
 
 # Строка подключения к базе данных
 # Здесь нужно заменить данные user, password, dbname на свои

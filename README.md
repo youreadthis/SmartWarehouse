@@ -12,7 +12,7 @@ To prepare venv
 To start localhost (backend)
 
 ```bash
-  uvicorn SmartWarehouse.app.main:app --reload
+  uvicorn app.main:app --reload
 ```
 
 To start localhost (frontend)

@@ -1,3 +1,3 @@
-from SmartWarehouse.configFile.DataBaseconfig import DataBase
-from SmartWarehouse.configFile.JWTconfig import Security 
-from SmartWarehouse.configFile.UrlAcess import url 
+from .DataBaseconfig import DataBase
+from .JWTconfig import Security 
+from .UrlAcess import url 
