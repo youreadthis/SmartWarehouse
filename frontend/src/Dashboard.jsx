@@ -13,11 +13,13 @@ import Battery4BarIcon from '@mui/icons-material/Battery4Bar';
 
 
 function Dashboard() {
+  document.title = "Текущая статистика";
+
   return (
     <>
       <Header />
       <HorizontalMenu />
-      <Grid container alignItems={"start"} sx={{ display: { lg: "grid" }, gridTemplateColumns: { lg: "auto 1fr" }, justifyItems: "start", alignContent: "start", rowGap: "20px" }}>
+      <Grid container alignItems={"start"} sx={{ display: { lg: "grid" }, gridTemplateColumns: { lg: "auto 1fr" }, justifyItems: "start", alignContent: "start", rowGap: "10px" }}>
         <Grid sx={{ gridRow: { lg: "span 4" } }}>
           <WarehouseMap />
         </Grid>
@@ -25,7 +27,7 @@ function Dashboard() {
           display: { md: "grid" }, gridTemplateColumns: {
             md: "repeat(4, auto)",
             lg: "repeat(3, auto)"
-          }, marginTop: "25px", padding: "24px"
+          }, marginTop: {lg: "25px"}, padding: "24px"
         }}>
           <StatisticsCard title="Активных роботов" icon={<SmartToyIcon sx={{ verticalAlign: "middle" }} />}>
             <Typography fontSize={"1.75rem"} sx={{ gridColumn: 2 }}>0/0</Typography>

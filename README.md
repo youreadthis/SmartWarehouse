@@ -4,15 +4,22 @@ Smart Werehouse for RTC
 
 ## Installation
 
-for prepear venv
+To prepare venv
 ```bash
   pip install -r 'requirements.txt'
 ```
 
-For start localhost
+To start localhost (backend)
 
 ```bash
-  uvicorn SmartWarehouse.app.main:app --reload
+  uvicorn app.main:app --reload
+```
+
+To start localhost (frontend)
+
+```bash
+  cd ./SmartWarehouse/frontend
+  npm run dev
 ```
     
 ## Documentation

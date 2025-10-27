@@ -1,0 +1,49 @@
+.chips,
+.checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  grid-column: span 2;
+}
+
+.date-pickers {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-items: start;
+  justify-content: start;
+  gap: 10px;
+}
+
+.filters-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  padding-inline: 25px;
+  padding-block: 20px;
+  gap: 10px;
+}
+
+.autocompletes {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 10px;
+}
+
+.buttons-panel {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.filters-title {
+  font-size: 1.25rem;
+  padding-left: 25px;
+  padding-top: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .date-pickers, .autocompletes {
+    display: flex;
+    flex-direction: column;
+  }
+}

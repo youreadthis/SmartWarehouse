@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import Dashboard from './Dashboard.jsx'
 import Auth from "./Auth/Auth.jsx"
+import History from "./History/History.jsx"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -12,6 +13,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/' element={<Dashboard/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/login' element={<Auth/>}/>
+        <Route path='/history' element={<History/>}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>

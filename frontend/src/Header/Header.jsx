@@ -33,7 +33,11 @@ function Header() {
             </div>
             <RouterLink to="/login">
 
-              <Button startIcon={<LogoutIcon />} variant="contained">
+              <Button startIcon={<LogoutIcon />} variant="contained" sx={{
+                '& .MuiButton-startIcon': {
+                  marginRight: '0',
+                },
+              }}>
                 <Wrapper>
                   <Typography sx={{ sm: visuallyHidden }}>Выход</Typography></Wrapper></Button>
             </RouterLink>

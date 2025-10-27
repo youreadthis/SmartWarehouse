@@ -1,0 +1,10 @@
+.stats-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.stats-title {
+  padding-block: 10px;
+  font-size: 1.25rem;
+}
