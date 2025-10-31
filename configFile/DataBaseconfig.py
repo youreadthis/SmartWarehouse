@@ -1,4 +1,7 @@
-class DataBase():
-    def __init__(self) -> None:
-        USERBD = 'user'
-        PASSWORDBD = 'password'
+postgresql = {
+    'pguser': 'postgres',
+    'password': '',
+    'host': 'localhost',
+    'port': 5432,
+    'pgdatabase': 'SmartWarehouse'
+}

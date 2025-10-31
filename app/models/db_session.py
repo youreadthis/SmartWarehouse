@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy_utils import create_database, database_exists
-from app.models.local_setings import postgresql as settings
+from configFile import postgresql as settings
 
 
 
