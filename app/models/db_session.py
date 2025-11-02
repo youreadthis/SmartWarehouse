@@ -1,4 +1,4 @@
- from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy_utils import create_database, database_exists
 from configFile import postgresql as settings
 
@@ -15,7 +15,7 @@ def get_engine(user, password, host, port, database):
 def get_engine_from_settings():
     keys = ['pguser', 'password', 'host', 'port', 'pgdatabase']
     if not all(key in keys for key in settings):
-        raise 'Not correct settings'
+        raise "Not correct settings"
 
     return get_engine(settings['pguser'],
                       settings['password'],
