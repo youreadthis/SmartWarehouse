@@ -190,6 +190,7 @@ function CSVLoaderModal({ open, handleClose }) {
             <li>Формат CSV, разделитель - ;</li>
             <li>Кодировка - UTF-8</li>
             <li>Обязательные колонки: product_id, product_name, quantity, zone, date</li>
+            <li>Формат даты: ГГГГ.ММ.ДД</li>
           </ul>
           {isFileLoading ?
             <div className="progress-wrapper">
