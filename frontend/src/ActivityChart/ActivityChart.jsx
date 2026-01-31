@@ -27,15 +27,21 @@ function ActivityChart() {
   }
 
   return (
-    <Paper sx={{ gridColumn: { md: "span 4" }, gridRow: { xl: "1 / 3" }, padding: "10px", maxWidth: "100vw", overflow: "auto"}}>
+    <Paper sx={{ gridColumn: { md: "span 4" }, gridRow: { xl: "1 / 3" }, padding: "10px", maxWidth: "100vw", overflow: "auto" }}>
       <h3 className="acivity-chart-title">График активности роботов за последний час</h3>
       <Typography color="#3B3B3B">Обновление каждые 30 минут</Typography>
       <LineChart
-       height={700}
-       xAxis={[{ data: minutesArr, scaleType: "point", label: "Минут назад" }]}
-       series={scansData.map((item, index) => { return { data: item, label: `Робот ${index + 1}` } })} 
-       yAxis={[{tickMinStep: 1, label: "Проверок"}]}></LineChart>
-    </Paper>
+        height={700}
+        xAxis={[{ data: minutesArr, scaleType: "point", label: "Минут назад" }]}
+        series={scansData.map((item, index) => { return { data: item, label: `Робот ${index + 1}` } })}
+        yAxis={[{ tickMinStep: 1, label: "Проверок" }]}
+        localeText={{
+          loading: "Загрузка данных...",
+          noData: "Нет данных"
+        }}
+      >
+      </LineChart>
+    </Paper >
   )
 }
 

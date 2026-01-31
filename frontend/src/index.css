@@ -36,3 +36,7 @@ h1, h2, h3 {
   background-color: rgb(163, 163, 163);
   box-shadow: 2px 2px 3px rgb(123, 123, 123);
 }
+
+.error-message, .loading-message {
+  margin: 10px;
+}

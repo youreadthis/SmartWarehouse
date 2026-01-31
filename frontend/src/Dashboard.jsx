@@ -12,7 +12,6 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Battery4BarIcon from '@mui/icons-material/Battery4Bar';
 import { useState } from "react";
 
-
 function Dashboard() {
   if (!localStorage.getItem("token")) {
     location.href = "/login";
