@@ -9,11 +9,20 @@
   border: 1px solid darkgray;
   border-radius: 10px;
   background-color: rgb(230, 229, 229);
-  text-align: center;
   transition: all .5s;
 }
 
 .drag-and-drop-area-active {
   background-color: #fff;
   border-color: #2c2b2b;
+}
+
+.preview-area {
+  border-collapse: collapse;
+  margin-block: 10px;
+}
+
+.preview-area td, .preview-area th {
+  border: 1px solid #373636;
+  padding: 3px;
 }

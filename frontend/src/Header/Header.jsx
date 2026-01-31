@@ -29,7 +29,7 @@ function Header() {
           </div>
           <div className="right-part">
             <div className="user-info">
-              <span>Иван</span> (<span>Оператор</span>)
+              <span>{localStorage.getItem("name") || sessionStorage.getItem("name") || "Гость"}</span> (<span>{localStorage.getItem("role") || sessionStorage.getItem("role") || "Просматривающий"}</span>)
             </div>
             <RouterLink to="/login">
 
@@ -37,6 +37,9 @@ function Header() {
                 '& .MuiButton-startIcon': {
                   marginRight: '0',
                 },
+              }} onClick={() => {
+                localStorage.clear();
+                sessionStorage.clear();
               }}>
                 <Wrapper>
                   <Typography sx={{ sm: visuallyHidden }}>Выход</Typography></Wrapper></Button>

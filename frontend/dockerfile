@@ -1,18 +1,12 @@
 # Этап сборки
-FROM node:16-alpine AS builder
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 COPY . .
-RUN npm run build
 
-# Этап продакшена
-FROM nginx:stable-alpine
-
-COPY --from=builder /app/build /usr/share/nginx/html
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 8000
+CMD [ "npm", "run", "dev" ]

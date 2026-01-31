@@ -1,21 +1,52 @@
-from app.models.users import Users
-from app.models import db_session
+from models.users import Users
+from models.base import Base
 from sqlalchemy import select
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session
+import os
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL не задан в окружении")
 
-Session = db_session.get_session()
+engine = create_engine(DATABASE_URL, pool_size=5, max_overflow=10)
+SessionLocal = scoped_session(sessionmaker(bind=engine))
+Base.metadata.create_all(bind=engine)
 
+USERS = [
+    Users(
+        id=1,
+        name="Иван",
+        email="ivan@example.com",
+        password_hash="12345cat",
+        role="Оператор"
+    ),
+    Users(
+        id=2,
+        name="Элла",
+        email="ellak@example.com",
+        password_hash="maTHISgooD",
+        role="Просматривающий"
+    ),
+    Users(
+        id=3,
+        name="Владимир",
+        email="vladimir@example.com",
+        password_hash="122333444455555",
+        role="Администратор"
+    )
+]
 
-async def check_useres(email) -> Users | None:
-    async with Session() as session:
-        query = select(Users).where(Users.email == email)
-        result = await session.execute(query)
-        result = result.scalar_one_or_none()
-        return result
+def login(email, password) -> Users | None:
+    session = SessionLocal()
+    for user in USERS:
+        session.merge(user)
 
-async def login(email, password) -> Users | None:
-    async with Session() as session:
-        query = select(Users).where(Users.email == email and Users.password_hash == password)
-        result = await session.execute(query)
-        result = result.scalar_one_or_none()
-        return result
+    session.commit()
+            
+    query = select(Users).where(Users.email == email, Users.password_hash == password)
+    result = session.execute(query)
+    result = result.one_or_none()
+
+    return result

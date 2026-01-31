@@ -1,11 +1,9 @@
 import sqlalchemy
-from app.models.db_session import *
-from sqlalchemy.orm import declarative_base
+from models.db_session import *
+from models.base import Base
 
 
 Session = get_session()
-Base = declarative_base()
-
 
 class Users(Base):
     __tablename__ = 'users'

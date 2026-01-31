@@ -1,18 +1,15 @@
-from app.models.robots import Robots
-import json
+from models.robots import Robots
+from models.inventory_history import InventoryHistory
+from models.base import Base
 import time
+import datetime
 import random
-import requests
 from datetime import datetime
 import os
-import psycopg2
-from sqlalchemy import create_engine, Column, String, Integer, Float, DateTime, JSON
-from sqlalchemy.ext.declarative import declarative_base
+from pytz import timezone
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
-Base = declarative_base()
-
-Base = declarative_base()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
@@ -20,18 +17,16 @@ if not DATABASE_URL:
 
 engine = create_engine(DATABASE_URL, pool_size=5, max_overflow=10)
 SessionLocal = scoped_session(sessionmaker(bind=engine))
+Base.metadata.create_all(bind=engine)
 
 class RobotEmulator:
-    def __init__(self, robot_id, api_url):
-
-        if len(robot_id) > 50:
-            raise ValueError(f"robot_id слишком длинный: {robot_id}")
+    def __init__(self, robot_id):
         self.robot_id = robot_id
-        self.api_url = api_url
-        self.battery = 100
-        self.current_zone = 'A'
-        self.current_row = 1
+        self.battery = random.randint(25, 100)
+        self.current_zone = random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        self.current_row = random.randint(1, 50)
         self.current_shelf = 1
+        self.status = "active"
 
         # Список тестовых товаров
         self.products = [
@@ -65,7 +60,7 @@ class RobotEmulator:
         if self.current_shelf > 10:
             self.current_shelf = 1
             self.current_row += 1
-        if self.current_row > 20:
+        if self.current_row > 50:
             self.current_row = 1
             # Переход к следующей зоне
             self.current_zone = chr(ord(self.current_zone) + 1)
@@ -74,10 +69,15 @@ class RobotEmulator:
         # Расход батареи
         self.battery -= random.uniform(0.1, 0.5)
         if self.battery < 20:
-            self.battery = 100  # Симуляция зарядки
+            self.status = "discharged"
+            self.send_data()
+            time.sleep(120)
+            self.battery = 100 
+            self.status = "active"
 
     def send_data(self):
         data = {
+            "status": self.status,
             "robot_id": self.robot_id,
             "zone": self.current_zone,
             "row": self.current_row,
@@ -86,33 +86,38 @@ class RobotEmulator:
             "next_checkpoint": f"{self.current_zone}-{self.current_row + 1}-{self.current_shelf}",
             "scan_results": self.generate_scan_data()
         }
-        if not self.api_url.startswith(('http://', 'https://')):
-            print(f"[{self.robot_id}] Некорректный API URL: {self.api_url}")
-            return
-        try:
-            response = requests.post(self.api_url, json=data, timeout=10)
-            if response.status_code == 200:
-                print(f"[{self.robot_id}] Данные отправлены на API (HTTP {response.status_code})")
-            else:
-                print(f"[{self.robot_id}] Ошибка API: HTTP {response.status_code}, ответ: {response.text}")
-        except requests.exceptions.RequestException as e:
-            print(f"[{self.robot_id}] Исключение при отправке на API: {e}")
         session = SessionLocal()
         try:
-            db_record = Robots(
+            robots_db_record = Robots(
                 id=data["robot_id"],
-                zone=data["zone"],
-                row=data["row"],
-                shelf=data["shelf"],
+                status=data["status"],
+                current_zone=data["zone"],
+                current_row=data["row"],
+                current_shelf=data["shelf"],
                 battery_level=data["battery_level"],
-                next_checkpoint=data["next_checkpoint"],
-                scan_results=data["scan_results"]
+                last_update=datetime.now()
             )
-            session.add(db_record)
+            session.merge(robots_db_record)
+
+            for scan_result in data["scan_results"]:
+                inventory_db_record = InventoryHistory(
+                    robot_id = data["robot_id"],
+                    product_id = scan_result["product_id"],
+                    product_name = scan_result["product_name"],
+                    quantity = scan_result["quantity"],
+                    zone = data["zone"],
+                    row_number = data["row"],
+                    shelf_number = data["shelf"],
+                    status = scan_result["status"],
+                    scanned_at = datetime.now(tz=timezone("Europe/Moscow"))
+                )
+
+                session.merge(inventory_db_record)
             session.commit()
-            print(f"[{self.robot_id}] Данные сохранены в БД")
+
+            print(f"[R-{self.robot_id}] Данные сохранены в БД", flush=True)
         except Exception as e:
-            print(f"[{self.robot_id}] Ошибка БД: {e}")
+            print(f"[R-{self.robot_id}] Ошибка БД: {e}", flush=True)
             session.rollback()
         finally:
             if session:
@@ -120,36 +125,9 @@ class RobotEmulator:
 
     def run(self):
         """Основной цикл работы робота"""
-
-        while True:
-            try:
+        try:
                 self.send_data()
                 self.move_to_next_location()
-                update_interval = int(os.getenv('UPDATE_INTERVAL', '10'))
-                time.sleep(update_interval)
-            except Exception as e:
-                print(f"[{self.robot_id}] Неожиданная ошибка в run(): {e}")
+        except Exception as e:
+                print(f"[R-{self.robot_id}] Неожиданная ошибка в run(): {e}", flush=True)
                 time.sleep(10)
-
-if __name__ == "__main__":
-    try:
-        Base.metadata.create_all(engine)
-        print("Таблицы созданы")
-    except Exception as e:
-        print(f"Ошибка создания таблиц: {e}")
-        raise
-    api_url = os.getenv('API_URL', 'http://localhost:3000')
-    if not api_url.startswith(('http://', 'https://')):
-        raise ValueError(f"Некорректный API_URL: {api_url}")
-    robots_count = int(os.getenv('ROBOTS_COUNT', 5))
-    # Запуск эмуляторов роботов
-    import threading
-
-    for i in range(1, robots_count + 1):
-        robot = RobotEmulator(f"RB-{i:03d}", api_url)
-        thread = threading.Thread(target=robot.run)
-        thread.daemon = True
-        thread.start()
-    # Держим главный поток активным
-    while True:
-        time.sleep(60)

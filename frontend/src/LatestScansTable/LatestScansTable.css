@@ -1,0 +1,24 @@
+.table-wrapper {
+    margin-bottom: 10px;
+    max-height: 350px;
+    max-width: calc(100% - 48px);
+    overflow: auto;
+}
+
+.scan-badge {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.scan-badge-ok {
+    background-color: green;
+}
+
+.scan-badge-low {
+    background-color: rgb(228, 164, 14);
+}
+
+.scan-badge-critical {
+    background-color: red;
+}

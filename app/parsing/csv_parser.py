@@ -1,6 +1,8 @@
 import csv
 import os
 from typing import List, Dict, Any
+from pathlib import Path
+
 
 class CSVParser:
     """
@@ -16,7 +18,8 @@ class CSVParser:
         """
         self.file_path = file_path
         if not os.path.exists(file_path):
-            raise FileNotFoundError(f"Файл не найден: {file_path}")
+            file = Path(file_path)
+            file.touch(exist_ok=True)
 
     def parse(self, encoding: str = 'utf-8', delimiter: str = ',') -> List[Dict[str, Any]]:
         """

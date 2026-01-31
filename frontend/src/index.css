@@ -12,3 +12,27 @@ h1, h2, h3 {
   margin: 0;
   font-weight: normal;
 }
+
+.ws-indicator {
+  position: fixed;
+  right: 5px;
+  bottom: 5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.ws-indicator.ws-indicator-active {
+  background-color: rgb(170, 234, 75);
+  box-shadow: 2px 2px 3px rgb(168, 225, 81);
+}
+
+.ws-indicator.ws-indicator-error {
+  background-color: red;
+  box-shadow: 2px 2px 3px rgb(156, 49, 49);
+}
+
+.ws-indicator.ws-indicator-connecting {
+  background-color: rgb(163, 163, 163);
+  box-shadow: 2px 2px 3px rgb(123, 123, 123);
+}

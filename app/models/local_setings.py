@@ -1,7 +1,7 @@
 postgresql = {
     'pguser': 'postgres',
-    'password': '',
+    'password': '1234',
     'host': 'localhost',
     'port': 5432,
-    'pgdatabase': 'SmartWarehouse'
+    'pgdatabase': 'warehouse_db'
 }
